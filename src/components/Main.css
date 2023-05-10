@@ -1,0 +1,25 @@
+.col-block {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 75px;
+  margin-top: -17px;
+  margin-left: 0;
+  padding-left: 0;
+  margin-left: -245px;
+}
+
+.col-header {
+  font-size: 13px;
+  margin-bottom: 10px;
+  padding-top: 10;
+  padding-left: 0;
+  font-weight: 500;
+  letter-spacing: 0.2;
+}
+.col-type {
+  color: #6a85f1;
+}
