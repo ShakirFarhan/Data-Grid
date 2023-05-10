@@ -1,0 +1,44 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "moishinetzer",
+      "name": "Moishi Netzer",
+      "avatar_url": "https://avatars.githubusercontent.com/u/11411486?v=4",
+      "profile": "http://mnetzer.com",
+      "contributions": [
+        "code",
+        "doc"
+      ]
+    },
+    {
+      "login": "AlexMNet",
+      "name": "Alex Maldonado",
+      "avatar_url": "https://avatars.githubusercontent.com/u/66364639?v=4",
+      "profile": "https://www.alexmaldonado.dev/",
+      "contributions": [
+        "question"
+      ]
+    },
+    {
+      "login": "Zonalds",
+      "name": "Paschal",
+      "avatar_url": "https://avatars.githubusercontent.com/u/50281058?v=4",
+      "profile": "https://github.com/Zonalds",
+      "contributions": [
+        "question"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "skipCi": true,
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "projectName": "PBandJ",
+  "projectOwner": "moishinetzer"
+}
