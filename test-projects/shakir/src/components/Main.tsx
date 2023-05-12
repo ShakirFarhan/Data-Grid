@@ -61,8 +61,10 @@ const Main: React.FC = () => {
         if (index === col) {
           return `
           <div class="col-block">
-            <h6 class="col-header">${text.title}</h6>
-            <span class="col-type">${text.type}</span>
+          <div class="col-inner">
+          <h6 class="col-header">${text.title}</h6>
+          <p class="col-type">string</p>
+          </div>
           </div>
         `;
         } else {
@@ -80,6 +82,7 @@ const Main: React.FC = () => {
       id: string;
     }[] = [...colHeader, { title: 'column3', type: '', id: '' }];
     setColHeaders(newColHeaders);
+    console.log(colHeader);
     setTableData([...tableData]);
   };
   const handleAddRule = () => {
@@ -94,7 +97,7 @@ const Main: React.FC = () => {
         colHeaders={columnHeaders}
         rowHeaders={false}
         className="custom-table"
-        afterChange={handleDataChange}
+        // afterChange={handleDataChange}
       />
       <button onClick={handleAddColumn} className="add">
         Add Column
