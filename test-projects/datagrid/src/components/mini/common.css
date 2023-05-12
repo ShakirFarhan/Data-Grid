@@ -1,0 +1,13 @@
+.type-model {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 200px;
+  height: 400px;
+  z-index: 10000;
+  background-color: black;
+}
+
+.hidden {
+  display: none;
+}

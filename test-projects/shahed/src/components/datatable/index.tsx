@@ -34,12 +34,6 @@ const DataTable: React.FC<Props> = ({ columns: initialColumns, dataSource: initi
         setColumns(newColumns);
     };
 
-    // const handleSaveColumn = (index: number) => {
-    //     const newColumns = [...columns];
-    //     const columnToSave = newColumns[index];
-    //     delete columnToSave.editing;
-    //     setColumns(newColumns);
-    // };
 
     const handleDeleteColumn = (index: number) => {
         const newColumns = columns.filter((_, i) => i !== index);
