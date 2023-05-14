@@ -3,8 +3,17 @@ import { types } from '../../constants/types';
 interface defaultProps {
   type: string;
   column: string;
+  onColumnChange: (
+    colId: string,
+    newHeaderName: string,
+    newFieldName: string
+  ) => void;
 }
-const TypesOptions: React.FC<defaultProps> = ({ type, column }) => {
+const TypesOptions: React.FC<defaultProps> = ({
+  type,
+  column,
+  onColumnChange,
+}) => {
   const [selectedOption, setSelectedOption] = useState(type);
   const [columnName, setColumnName] = useState(column);
   const handleSelectedOptions = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -15,7 +24,8 @@ const TypesOptions: React.FC<defaultProps> = ({ type, column }) => {
   };
   const handleOnSubmit = (e: any) => {
     e.preventDefault();
-    column = columnName;
+    console.log('Submit');
+    onColumnChange(selectedOption, columnName, selectedOption);
   };
 
   console.log(columnName);

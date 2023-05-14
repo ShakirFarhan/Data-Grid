@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
@@ -8,7 +8,6 @@ import CustomCell from './mini/CustomCell';
 import { columnInterface, rowType } from '../constants/interfaces';
 const Table = () => {
   const containerStyle = useMemo(() => ({ width: '100%', height: '100%' }), []);
-
   const [rowData, setRowData] = useState<rowType[]>([
     {
       id: 1,
@@ -32,17 +31,31 @@ const Table = () => {
 
   const [columnDefs, setColumnDefs] = useState<columnInterface[]>([
     {
+      id: 'id',
       headerName: 'Id',
       field: 'id',
       type: 'number',
-      headerComponent: () => <CustomHeaderCell label="Id" type="number" />,
+      headerComponent: () => (
+        <CustomHeaderCell
+          label="Id"
+          type="number"
+          onColumnChange={handleEditCol}
+        />
+      ),
       headerClass: 'column-header',
     },
     {
+      id: 'name',
       headerName: 'Name',
       field: 'name',
       type: 'string',
-      headerComponent: () => <CustomHeaderCell label="Name" type="string" />,
+      headerComponent: () => (
+        <CustomHeaderCell
+          label="Name"
+          type="string"
+          onColumnChange={handleEditCol}
+        />
+      ),
       cellRendererFramework: CustomCell,
       cellRendererParams: (params: any) => ({
         onEdit: () => {
@@ -56,6 +69,7 @@ const Table = () => {
       headerClass: 'column-header',
     },
     {
+      id: 'age',
       headerName: 'Age',
       field: 'age',
       type: 'number',
@@ -70,13 +84,26 @@ const Table = () => {
         },
         cellValue: params.value,
       }),
-      headerComponent: () => <CustomHeaderCell label="Age" type="number" />,
+      headerComponent: () => (
+        <CustomHeaderCell
+          label="Age"
+          type="number"
+          onColumnChange={handleEditCol}
+        />
+      ),
     },
     {
+      id: 'phone',
       headerName: 'Phone',
       field: 'phone',
       type: 'number',
-      headerComponent: () => <CustomHeaderCell label="Phone" type="number" />,
+      headerComponent: () => (
+        <CustomHeaderCell
+          label="Phone"
+          type="number"
+          onColumnChange={handleEditCol}
+        />
+      ),
       headerClass: 'column-header',
     },
   ]);
@@ -96,11 +123,16 @@ const Table = () => {
       const updated = [
         ...data,
         {
+          id: 'default',
           headerName: 'default',
           field: 'default',
           type: 'any',
           headerComponent: () => (
-            <CustomHeaderCell label="Default" type="any" onEdit={onEdit} />
+            <CustomHeaderCell
+              label="Default"
+              type="any"
+              onColumnChange={handleEditCol}
+            />
           ),
           cellRendererFramework: CustomCell,
           cellRendererParams: (params: any) => ({
@@ -130,7 +162,33 @@ const Table = () => {
   const handleCellValueChanged = (params: any) => {
     params.api.stopEditing();
   };
-
+  const handleEditCol = (
+    colId: string,
+    newHeaderName: string,
+    newFieldName: string
+  ) => {
+    console.log(
+      'cold id :' + colId,
+      ' New Header Name: ' + newHeaderName,
+      ' New Field :' + newFieldName
+    );
+    const index = columnDefs.findIndex((col) => col.field === colId);
+    console.log('index :' + index);
+    if (index !== -1) {
+      setColumnDefs((prevColumnDefs) => {
+        const updatedColumnDefs: any = [...prevColumnDefs];
+        updatedColumnDefs[index] = {
+          ...updatedColumnDefs[index],
+          headerName: newHeaderName,
+          field: newFieldName,
+        };
+        return updatedColumnDefs;
+      });
+    }
+  };
+  useEffect(() => {
+    console.log(columnDefs);
+  }, [columnDefs]);
   return (
     <div style={containerStyle}>
       <div style={{ height: '100%', boxSizing: 'border-box' }}>

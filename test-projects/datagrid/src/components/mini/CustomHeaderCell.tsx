@@ -10,7 +10,7 @@ const CustomHeaderCell: React.FC<columnHeaderProps> = ({
   label,
   children,
   type,
-  onEdit,
+  onColumnChange,
 }) => {
   const [modalActive, setModalActive] = useState(false);
   const [pinned, setPinned] = useState(false);
@@ -23,7 +23,7 @@ const CustomHeaderCell: React.FC<columnHeaderProps> = ({
   const handlePinning = () => {
     setPinned((data) => !data);
   };
-  const handleClick = () => {};
+
   return (
     <>
       <div onClick={handleModal} className="custom-column-header">
@@ -38,7 +38,11 @@ const CustomHeaderCell: React.FC<columnHeaderProps> = ({
       </div>
       {modalActive && (
         <div className="type-model">
-          <TypesOptions type={type} column={label} />
+          <TypesOptions
+            type={type}
+            column={label}
+            onColumnChange={onColumnChange}
+          />
         </div>
       )}
 

@@ -1,4 +1,5 @@
 export interface columnInterface {
+  id: string;
   headerName: string;
   field: string;
   type: string;
@@ -21,5 +22,9 @@ export interface columnHeaderProps {
   label: string;
   children?: any;
   type: string;
-  onEdit?: () => any;
+  onColumnChange: (
+    colId: string,
+    newHeaderName: string,
+    newFieldName: string
+  ) => void;
 }
