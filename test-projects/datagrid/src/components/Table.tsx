@@ -1,22 +1,11 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { useMemo, useState } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import CustomHeaderCell from './mini/CustomHeaderCell';
 import './table.css';
-interface rowType {
-  id?: number | string;
-  name?: string | number;
-  age?: number | string;
-  phone?: number | string;
-}
-
+import CustomCell from './mini/CustomCell';
+import { columnInterface, rowType } from '../constants/interfaces';
 const Table = () => {
   const containerStyle = useMemo(() => ({ width: '100%', height: '100%' }), []);
 
@@ -41,23 +30,46 @@ const Table = () => {
     },
   ]);
 
-  const [columnDefs, setColumnDefs] = useState([
+  const [columnDefs, setColumnDefs] = useState<columnInterface[]>([
     {
       headerName: 'Id',
       field: 'id',
       type: 'number',
       headerComponent: () => <CustomHeaderCell label="Id" type="number" />,
+      headerClass: 'column-header',
     },
     {
       headerName: 'Name',
       field: 'name',
       type: 'string',
       headerComponent: () => <CustomHeaderCell label="Name" type="string" />,
+      cellRendererFramework: CustomCell,
+      cellRendererParams: (params: any) => ({
+        onEdit: () => {
+          params.api.startEditingCell({
+            rowIndex: params.node.rowIndex,
+            colKey: params.column.colId,
+          });
+        },
+        cellValue: params.value,
+      }),
+      headerClass: 'column-header',
     },
     {
       headerName: 'Age',
       field: 'age',
       type: 'number',
+      headerClass: 'column-header',
+      cellRendererFramework: CustomCell,
+      cellRendererParams: (params: any) => ({
+        onEdit: () => {
+          params.api.startEditingCell({
+            rowIndex: params.node.rowIndex,
+            colKey: params.column.colId,
+          });
+        },
+        cellValue: params.value,
+      }),
       headerComponent: () => <CustomHeaderCell label="Age" type="number" />,
     },
     {
@@ -65,6 +77,7 @@ const Table = () => {
       field: 'phone',
       type: 'number',
       headerComponent: () => <CustomHeaderCell label="Phone" type="number" />,
+      headerClass: 'column-header',
     },
   ]);
   const defaultColDef = useMemo(
@@ -77,17 +90,29 @@ const Table = () => {
     }),
     []
   );
+  const onEdit = () => {};
   const handleAddCol = () => {
     setColumnDefs((data) => {
       const updated = [
         ...data,
         {
-          headerName: 'randome',
-          field: 'random',
-          type: 'string',
+          headerName: 'default',
+          field: 'default',
+          type: 'any',
           headerComponent: () => (
-            <CustomHeaderCell label="Random" type="string" />
+            <CustomHeaderCell label="Default" type="any" onEdit={onEdit} />
           ),
+          cellRendererFramework: CustomCell,
+          cellRendererParams: (params: any) => ({
+            onEdit: () => {
+              params.api.startEditingCell({
+                rowIndex: params.node.rowIndex,
+                colKey: params.column.colId,
+              });
+            },
+            cellValue: params.value,
+          }),
+          headerClass: 'column-header',
         },
       ];
       return updated;
@@ -102,24 +127,20 @@ const Table = () => {
       return updated;
     });
   };
+  const handleCellValueChanged = (params: any) => {
+    params.api.stopEditing();
+  };
 
   return (
     <div style={containerStyle}>
       <div style={{ height: '100%', boxSizing: 'border-box' }}>
-        <div
-          style={{
-            height: '240px',
-            width: '100%',
-            position: 'relative',
-            zIndex: '1',
-          }}
-          className="grid-container"
-        >
+        <div className="grid-container">
           <AgGridReact
             rowData={rowData}
             columnDefs={columnDefs}
             defaultColDef={defaultColDef}
             className="ag-theme-alpine"
+            onCellValueChanged={handleCellValueChanged}
           />
         </div>
         <button onClick={handleAddRule}>Add Rule</button>

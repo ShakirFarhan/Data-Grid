@@ -1,13 +1,98 @@
 .type-model {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 200px;
-  height: 400px;
-  z-index: 10000;
-  background-color: black;
+  position: fixed;
+  top: 70px;
+  /* left: 10px; */
+  width: 250px;
+  height: 200px;
+  z-index: 10;
+  background-color: #ffff;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  display: flex;
+  flex-direction: column;
 }
-
+.modal-options {
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+  padding: 8px 10px;
+}
+.modal-options input,
+select {
+  padding: 4px 10px;
+}
+select option {
+  width: 100px;
+  height: 400px;
+  color: #000000;
+  outline: 0;
+  border: none;
+  background-color: #ffff;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  border-radius: -10px;
+  padding: 3px 4px;
+  font-size: 15px;
+  letter-spacing: 0.3px;
+  margin-bottom: 4px;
+}
 .hidden {
   display: none;
+}
+.edit-btn {
+  background: transparent;
+  border: none;
+  outline: 0;
+  cursor: pointer;
+}
+.edit-btn-icon {
+  width: 18px;
+  height: 18px;
+}
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 40px;
+}
+.modal-hidden {
+  display: none;
+  background-color: transparent;
+  z-index: -1;
+}
+.custom-column-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  /* row-gap: 14px; */
+  cursor: pointer;
+  position: relative;
+}
+.column-props {
+  position: absolute;
+  top: 6px;
+  right: 5px;
+  display: flex;
+  column-gap: 7.5px;
+  align-items: center;
+}
+.column-props .move-btn {
+  height: 17px;
+  width: 14px;
+}
+.column-props .pin-btn {
+  height: 13.5px;
+  width: 15px;
+  fill: grey;
+}
+.pinned {
+  height: 13.5px;
+  width: 15px;
+
+  fill: #2f54eb;
+}
+.column-props .menu-btn {
+  width: 15px;
+  height: 13.5px;
 }

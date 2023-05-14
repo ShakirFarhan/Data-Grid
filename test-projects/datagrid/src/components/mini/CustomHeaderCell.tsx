@@ -1,26 +1,56 @@
-import TypesModal from './TypesModal';
+import { useState } from 'react';
 import './common.css';
-const CustomHeaderCell: React.FC<{
-  label: string;
-  children?: any;
-  type: string;
-}> = ({ label, children, type }) => {
+import TypesOptions from './TypesOptions';
+import { BsPinAngleFill } from 'react-icons/bs';
+import { RxHamburgerMenu } from 'react-icons/rx';
+import { CiMenuKebab } from 'react-icons/ci';
+import { columnHeaderProps } from '../../constants/interfaces';
+
+const CustomHeaderCell: React.FC<columnHeaderProps> = ({
+  label,
+  children,
+  type,
+  onEdit,
+}) => {
+  const [modalActive, setModalActive] = useState(false);
+  const [pinned, setPinned] = useState(false);
+  const handleModal = () => {
+    setModalActive((data) => {
+      return !data;
+    });
+  };
+  console.log('Column :' + label);
+  const handlePinning = () => {
+    setPinned((data) => !data);
+  };
+  const handleClick = () => {};
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start',
-        rowGap: '14px',
-        cursor: 'pointer',
-        position: 'relative',
-      }}
-    >
-      <span style={{ fontWeight: '400', fontSize: '15px' }}>{label}</span>
-      <TypesModal />
-      {children}
-    </div>
+    <>
+      <div onClick={handleModal} className="custom-column-header">
+        <span style={{ fontWeight: '400', fontSize: '15px' }}>{label}</span>
+        <span
+          style={{ marginRight: '4px', fontSize: '12px', color: '#829df7' }}
+        >
+          {type}
+        </span>
+
+        {children}
+      </div>
+      {modalActive && (
+        <div className="type-model">
+          <TypesOptions type={type} column={label} />
+        </div>
+      )}
+
+      <div className="column-props">
+        <RxHamburgerMenu className="move-btn" />
+        <BsPinAngleFill
+          onClick={handlePinning}
+          className={pinned ? 'pinned' : 'pin-btn'}
+        />
+        <CiMenuKebab className="menu-btn" />
+      </div>
+    </>
   );
 };
 export default CustomHeaderCell;
