@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { types } from '../../constants/types';
 interface defaultProps {
+  id: string,
   type: string;
   column: string;
   onColumnChange: (
     colId: string,
     newHeaderName: string,
-    newFieldName: string
+    newFieldName: string,
+    id: string
   ) => void;
 }
 const TypesOptions: React.FC<defaultProps> = ({
+  id,
   type,
   column,
   onColumnChange,
@@ -24,11 +27,9 @@ const TypesOptions: React.FC<defaultProps> = ({
   };
   const handleOnSubmit = (e: any) => {
     e.preventDefault();
-    console.log('Submit');
-    onColumnChange(selectedOption, columnName, selectedOption);
+    onColumnChange(selectedOption, columnName, selectedOption, id);
   };
 
-  console.log(columnName);
   return (
     <form onSubmit={handleOnSubmit} className="modal-options">
       <input
@@ -60,7 +61,7 @@ const TypesOptions: React.FC<defaultProps> = ({
       <input name="description" type="text" placeholder="Description" />
       <input name="default" type="text" placeholder="Default Value" />
       <input name="expression" type="text" placeholder="Expression" />
-      <button type="submit" />
+      <button type="submit" >Save</button>
     </form>
   );
 };

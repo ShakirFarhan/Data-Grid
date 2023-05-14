@@ -22,9 +22,11 @@ export interface columnHeaderProps {
   label: string;
   children?: any;
   type: string;
+  id: string;
   onColumnChange: (
     colId: string,
     newHeaderName: string,
-    newFieldName: string
+    newFieldName: string,
+    id: string
   ) => void;
 }

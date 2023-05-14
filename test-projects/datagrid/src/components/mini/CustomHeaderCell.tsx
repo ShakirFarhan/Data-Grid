@@ -5,11 +5,13 @@ import { BsPinAngleFill } from 'react-icons/bs';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { CiMenuKebab } from 'react-icons/ci';
 import { columnHeaderProps } from '../../constants/interfaces';
+import { AiFillPlusCircle } from 'react-icons/ai'
 
 const CustomHeaderCell: React.FC<columnHeaderProps> = ({
   label,
   children,
   type,
+  id,
   onColumnChange,
 }) => {
   const [modalActive, setModalActive] = useState(false);
@@ -19,7 +21,6 @@ const CustomHeaderCell: React.FC<columnHeaderProps> = ({
       return !data;
     });
   };
-  console.log('Column :' + label);
   const handlePinning = () => {
     setPinned((data) => !data);
   };
@@ -39,6 +40,7 @@ const CustomHeaderCell: React.FC<columnHeaderProps> = ({
       {modalActive && (
         <div className="type-model">
           <TypesOptions
+            id={id}
             type={type}
             column={label}
             onColumnChange={onColumnChange}
@@ -53,6 +55,7 @@ const CustomHeaderCell: React.FC<columnHeaderProps> = ({
           className={pinned ? 'pinned' : 'pin-btn'}
         />
         <CiMenuKebab className="menu-btn" />
+        <AiFillPlusCircle className="menu-attach"/>
       </div>
     </>
   );
