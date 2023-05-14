@@ -6,28 +6,10 @@ import CustomHeaderCell from './mini/CustomHeaderCell';
 import './table.css';
 import CustomCell from './mini/CustomCell';
 import { columnInterface, rowType } from '../constants/interfaces';
+import { DefaultRowData } from '../constants/data';
 const Table = () => {
   const containerStyle = useMemo(() => ({ width: '100%', height: '100%' }), []);
-  const [rowData, setRowData] = useState<rowType[]>([
-    {
-      id: 1,
-      name: 'Shakir Farhan',
-      age: 18,
-      phone: 88484,
-    },
-    {
-      id: 2,
-      name: 'John Doe',
-      age: 21,
-      phone: 24533,
-    },
-    {
-      id: 3,
-      name: 'Rock',
-      age: 32,
-      phone: 687647,
-    },
-  ]);
+  const [rowData, setRowData] = useState<rowType[]>(DefaultRowData);
 
   const [columnDefs, setColumnDefs] = useState<columnInterface[]>([
     {
@@ -165,30 +147,40 @@ const Table = () => {
   const handleEditCol = (
     colId: string,
     newHeaderName: string,
-    newFieldName: string
+    newType: string
   ) => {
     console.log(
       'cold id :' + colId,
       ' New Header Name: ' + newHeaderName,
-      ' New Field :' + newFieldName
+      ' New Field :' + newType
     );
+    console.log(columnDefs);
+
     const index = columnDefs.findIndex((col) => col.field === colId);
     console.log('index :' + index);
     if (index !== -1) {
       setColumnDefs((prevColumnDefs) => {
         const updatedColumnDefs: any = [...prevColumnDefs];
+
         updatedColumnDefs[index] = {
           ...updatedColumnDefs[index],
           headerName: newHeaderName,
-          field: newFieldName,
+          field: colId,
+          type: newType,
+          id: colId,
+          headerComponent: () => (
+            <CustomHeaderCell
+              label={newHeaderName}
+              type={newType}
+              onColumnChange={handleEditCol}
+            />
+          ),
         };
         return updatedColumnDefs;
       });
     }
   };
-  useEffect(() => {
-    console.log(columnDefs);
-  }, [columnDefs]);
+
   return (
     <div style={containerStyle}>
       <div style={{ height: '100%', boxSizing: 'border-box' }}>

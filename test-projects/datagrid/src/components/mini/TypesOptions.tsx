@@ -1,14 +1,7 @@
 import React, { useState } from 'react';
-import { types } from '../../constants/types';
-interface defaultProps {
-  type: string;
-  column: string;
-  onColumnChange: (
-    colId: string,
-    newHeaderName: string,
-    newFieldName: string
-  ) => void;
-}
+import { types } from '../../constants/data';
+import { defaultProps } from '../../constants/interfaces';
+
 const TypesOptions: React.FC<defaultProps> = ({
   type,
   column,
@@ -25,10 +18,9 @@ const TypesOptions: React.FC<defaultProps> = ({
   const handleOnSubmit = (e: any) => {
     e.preventDefault();
     console.log('Submit');
-    onColumnChange(selectedOption, columnName, selectedOption);
+    onColumnChange(column.toLowerCase(), columnName, selectedOption);
   };
 
-  console.log(columnName);
   return (
     <form onSubmit={handleOnSubmit} className="modal-options">
       <input

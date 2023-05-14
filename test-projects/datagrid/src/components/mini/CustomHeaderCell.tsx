@@ -19,7 +19,6 @@ const CustomHeaderCell: React.FC<columnHeaderProps> = ({
       return !data;
     });
   };
-  console.log('Column :' + label);
   const handlePinning = () => {
     setPinned((data) => !data);
   };

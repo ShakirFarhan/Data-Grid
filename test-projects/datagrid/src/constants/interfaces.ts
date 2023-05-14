@@ -28,3 +28,12 @@ export interface columnHeaderProps {
     newFieldName: string
   ) => void;
 }
+export interface defaultProps {
+  type: string;
+  column: string;
+  onColumnChange: (
+    colId: string,
+    newHeaderName: string,
+    newFieldName: string
+  ) => void;
+}
