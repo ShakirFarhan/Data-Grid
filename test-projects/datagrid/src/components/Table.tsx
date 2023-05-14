@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
@@ -6,31 +6,10 @@ import CustomHeaderCell from './mini/CustomHeaderCell';
 import './table.css';
 import CustomCell from './mini/CustomCell';
 import { columnInterface, rowType } from '../constants/interfaces';
-
-
-
+import { DefaultRowData } from '../constants/data';
 const Table = () => {
   const containerStyle = useMemo(() => ({ width: '100%', height: '100%' }), []);
-  const [rowData, setRowData] = useState<rowType[]>([
-    // {
-    //   id: 1,
-    //   name: 'Shakir Farhan',
-    //   age: 18,
-    //   phone: 88484,
-    // },
-    // {
-    //   id: 2,
-    //   name: 'John Doe',
-    //   age: 21,
-    //   phone: 24533,
-    // },
-    // {
-    //   id: 3,
-    //   name: 'Rock',
-    //   age: 32,
-    //   phone: 687647,
-    // },
-  ]);
+  const [rowData, setRowData] = useState<rowType[]>(DefaultRowData);
 
   const [columnDefs, setColumnDefs] = useState<columnInterface[]>([
     {
@@ -237,18 +216,42 @@ const Table = () => {
   const handleCellValueChanged = (params: any) => {
     params.api.stopEditing();
   };
+  // const handleEditCol = (
+  //   colId: string,
+  //   newHeaderName: string,
+  //   newType: string
+  // ) => {
+  //   console.log(
+  //     'cold id :' + colId,
+  //     ' New Header Name: ' + newHeaderName,
+  //     ' New Field :' + newType
+  //   );
+  //   console.log(columnDefs);
 
+  //   const index = columnDefs.findIndex((col) => col.field === colId);
+  //   console.log('index :' + index);
+  //   if (index !== -1) {
+  //     setColumnDefs((prevColumnDefs) => {
+  //       const updatedColumnDefs: any = [...prevColumnDefs];
 
-
-  
-
-
-
-  useEffect(() => {
-    console.log(columnDefs);
-  }, [columnDefs]);
-
-
+  //       updatedColumnDefs[index] = {
+  //         ...updatedColumnDefs[index],
+  //         headerName: newHeaderName,
+  //         field: colId,
+  //         type: newType,
+  //         id: colId,
+  //         headerComponent: () => (
+  //           <CustomHeaderCell
+  //             label={newHeaderName}
+  //             type={newType}
+  //             onColumnChange={handleEditCol}
+  //           />
+  //         ),
+  //       };
+  //       return updatedColumnDefs;
+  //     });
+  //   }
+  // };
 
   return (
     <div style={containerStyle}>

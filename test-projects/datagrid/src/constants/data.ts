@@ -1,3 +1,5 @@
+import { rowType } from './interfaces';
+
 export const types = [
   {
     id: 1,
@@ -34,5 +36,25 @@ export const types = [
   {
     id: 9,
     type: 'Any',
+  },
+];
+export const DefaultRowData: rowType[] = [
+  {
+    id: 1,
+    name: 'Shakir Farhan',
+    age: 18,
+    phone: 88484,
+  },
+  {
+    id: 2,
+    name: 'John Doe',
+    age: 21,
+    phone: 24533,
+  },
+  {
+    id: 3,
+    name: 'Rock',
+    age: 32,
+    phone: 687647,
   },
 ];

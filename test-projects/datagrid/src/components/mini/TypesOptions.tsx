@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { types } from '../../constants/types';
 interface defaultProps {
   id: string,
   type: string;
@@ -11,6 +10,9 @@ interface defaultProps {
     id: string
   ) => void;
 }
+import { types } from '../../constants/data';
+import { defaultProps } from '../../constants/interfaces';
+
 const TypesOptions: React.FC<defaultProps> = ({
   id,
   type,
