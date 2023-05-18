@@ -1,102 +1,80 @@
 import React, { useState } from 'react';
-import { AgGridReact } from 'ag-grid-react';
-import 'ag-grid-community/styles/ag-grid.css';
-import 'ag-grid-community/styles/ag-theme-alpine.css';
+import './DataTable.css';
 
-interface ColumnDefinition {
-    headerName: string;
-    field: string;
-}
-
-interface RowData {
-    [key: string]: any;
-}
+type DataRow = string[];
 
 const DataTable: React.FC = () => {
-    const [columnDefs, setColumnDefs] = useState<ColumnDefinition[]>([
-        { headerName: 'Name', field: 'name' },
-        { headerName: 'Age', field: 'age' },
-        { headerName: 'Email', field: 'email' },
+    const [headers, setHeaders] = useState<string[]>(['Column 1', 'Column 2']);
+    const [data, setData] = useState<DataRow[]>([
+        ['Row 1 Data 1', 'Row 1 Data 2'],
+        ['Row 2 Data 1', 'Row 2 Data 2'],
     ]);
 
-    const [rowData, setRowData] = useState<RowData[]>([
-        { name: 'John Doe', age: 30, email: 'john.doe@example.com' },
-        { name: 'Jane Smith', age: 25, email: 'jane.smith@example.com' },
-        { name: 'Mike Johnson', age: 35, email: 'mike.johnson@example.com' },
-    ]);
-
-    const handleHeaderNameChange = (colId: string, newHeaderName: string) => {
-        setColumnDefs((prevDefs) =>
-            prevDefs.map((colDef) =>
-                colDef.field === colId ? { ...colDef, headerName: newHeaderName } : colDef
-            )
-        );
+    const addRow = () => {
+        setData((prevData) => [...prevData, Array(headers.length).fill('')]);
     };
 
-    const handleCellValueChanged = (params: any) => {
-        const { colDef, data, newValue } = params;
-        const { field } = colDef;
-        setRowData((prevData) =>
-            prevData.map((row) => (row === data ? { ...row, [field]: newValue } : row))
-        );
+    const addColumn = () => {
+        const number = parseInt(headers.length) + 1;
+        const newHeader = "Column" + number ;
+        if (newHeader) {
+            setHeaders((prevHeaders) => [...prevHeaders, newHeader]);
+            setData((prevData) => prevData.map((row) => [...row, '']));
+        }
     };
 
-    const headerCellRenderer = (params: any) => {
-        const { colDef } = params;
-        const { headerName, field } = colDef;
+    const updateHeader = (index: number, value: string) => {
+        setHeaders((prevHeaders) => {
+            const newHeaders = [...prevHeaders];
+            newHeaders[index] = value;
+            return newHeaders;
+        });
+    };
 
-        return (
-            <CustomHeaderCell
-                value={headerName}
-                onHeaderNameChange={(newHeaderName) => handleHeaderNameChange(field, newHeaderName)}
-            />
-        );
+    const updateCell = (rowIndex: number, colIndex: number, value: string) => {
+        setData((prevData) => {
+            const newData = [...prevData];
+            newData[rowIndex][colIndex] = value;
+            return newData;
+        });
     };
 
     return (
-        <div className="ag-theme-alpine" style={{ height: '300px', width: '100%' }}>
-            <AgGridReact
-                columnDefs={columnDefs}
-                rowData={rowData}
-                onCellValueChanged={handleCellValueChanged}
-                frameworkComponents={{ headerCellRenderer }}
-            />
+        <div className="data-table">
+            <div className="table-header">
+                {headers.map((header, index) => (
+                    <div key={index} className="header-cell">
+                        <input
+                            type="text"
+                            value={header}
+                            onChange={(e) => updateHeader(index, e.target.value)}
+                        />
+                    </div>
+                ))}
+                
+            </div>
+            <div className="table-body">
+                {data.map((row, rowIndex) => (
+                    <div key={rowIndex} className="table-row">
+                        {row.map((cell, colIndex) => (
+                            <div key={colIndex} className="table-cell">
+                                <input
+                                    type="text"
+                                    value={cell}
+                                    onChange={(e) => updateCell(rowIndex, colIndex, e.target.value)}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                ))}
+            </div>
+            <div className="table-footer">
+                <button onClick={addRow}>Add Row</button>
+            </div>
+            <div className="header-cell">
+                <button onClick={addColumn}>Add Column</button>
+            </div>
         </div>
-    );
-};
-
-interface CustomHeaderCellProps {
-    value: string;
-    onHeaderNameChange: (newHeaderName: string) => void;
-}
-
-const CustomHeaderCell: React.FC<CustomHeaderCellProps> = ({ value, onHeaderNameChange }) => {
-    const [isEditing, setIsEditing] = useState(false);
-    const [headerName, setHeaderName] = useState(value);
-
-    const handleHeaderNameClick = () => {
-        setIsEditing(true);
-    };
-
-    const handleHeaderNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setHeaderName(event.target.value);
-    };
-
-    const handleBlur = () => {
-        setIsEditing(false);
-        onHeaderNameChange(headerName);
-    };
-
-    return isEditing ? (
-        <input
-            type="text"
-            value={headerName}
-            onChange={handleHeaderNameChange}
-            onBlur={handleBlur}
-            autoFocus
-        />
-    ) : (
-        <div onClick={handleHeaderNameClick}>{value}</div>
     );
 };
 
