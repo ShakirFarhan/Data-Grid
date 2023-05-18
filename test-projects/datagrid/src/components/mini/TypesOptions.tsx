@@ -1,15 +1,4 @@
 import React, { useState } from 'react';
-interface defaultProps {
-  id: string,
-  type: string;
-  column: string;
-  onColumnChange: (
-    colId: string,
-    newHeaderName: string,
-    newFieldName: string,
-    id: string
-  ) => void;
-}
 import { types } from '../../constants/data';
 import { defaultProps } from '../../constants/interfaces';
 
@@ -63,7 +52,7 @@ const TypesOptions: React.FC<defaultProps> = ({
       <input name="description" type="text" placeholder="Description" />
       <input name="default" type="text" placeholder="Default Value" />
       <input name="expression" type="text" placeholder="Expression" />
-      <button type="submit" >Save</button>
+      <button type="submit">Save</button>
     </form>
   );
 };

@@ -7,6 +7,8 @@ export interface columnInterface {
   headerClass: string;
   cellRendererFramework?: any;
   cellRendererParams?: any;
+  pinned?: 'left' | 'right';
+  width?: number;
 }
 export interface rowType {
   id?: number | string;
@@ -29,13 +31,17 @@ export interface columnHeaderProps {
     newFieldName: string,
     id: string
   ) => void;
+  handlePin: (id: string, pinned: boolean) => void;
+  userColumn?: boolean;
 }
 export interface defaultProps {
+  id: string;
   type: string;
   column: string;
   onColumnChange: (
     colId: string,
     newHeaderName: string,
-    newFieldName: string
+    newFieldName: string,
+    id: string
   ) => void;
 }

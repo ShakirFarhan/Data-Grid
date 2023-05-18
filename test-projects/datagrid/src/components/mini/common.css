@@ -1,6 +1,6 @@
 .type-model {
   position: fixed;
-  top: 70px;
+  top: 90px;
   /* left: 10px; */
   width: 250px;
   height: 200px;
@@ -97,13 +97,14 @@ select option {
   height: 13.5px;
   width: 15px;
   fill: grey;
+  fill: #2f54eb;
 }
 
 .pinned {
   height: 13.5px;
   width: 15px;
 
-  fill: #2f54eb;
+  fill: grey;
 }
 
 .column-props .menu-btn {
@@ -116,4 +117,21 @@ select option {
   height: 19.5px;
   margin-right: 0px;
   margin-bottom: -34px;
+}
+.any-btn {
+  border: none;
+  outline: 0;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 34%;
+  left: 30%;
+}
+.any-btn span {
+  font-size: 15px;
+}
+.bottom-arrow-icon {
+  width: 18px;
+  height: 18px;
 }

@@ -38,7 +38,7 @@ export const types = [
     type: 'Any',
   },
 ];
-export const DefaultRowData: rowType[] = [
+export const DefaultWhenRowData: rowType[] = [
   {
     id: 1,
     name: 'Shakir Farhan',

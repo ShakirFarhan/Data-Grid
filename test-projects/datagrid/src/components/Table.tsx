@@ -6,26 +6,41 @@ import CustomHeaderCell from './mini/CustomHeaderCell';
 import './table.css';
 import CustomCell from './mini/CustomCell';
 import { columnInterface, rowType } from '../constants/interfaces';
-import { DefaultRowData } from '../constants/data';
+import { DefaultWhenRowData } from '../constants/data';
+import { AiFillPlusCircle } from 'react-icons/ai';
 const Table = () => {
-  const containerStyle = useMemo(() => ({ width: '100%', height: '100%' }), []);
-  const [rowData, setRowData] = useState<rowType[]>(DefaultRowData);
-
-  const [columnDefs, setColumnDefs] = useState<columnInterface[]>([
+  const [whenRowData, setWhenRowData] = useState<rowType[]>(DefaultWhenRowData);
+  const [thenRowData, setThenRowData] = useState<any[]>([]);
+  const [thenColumnDefs, setThenColumnDefs] = useState<any[]>([]);
+  const [whenColumnDefs, setWhenColumnDefs] = useState<columnInterface[]>([
     {
       id: 'id',
       headerName: 'Id',
       field: 'id',
       type: 'number',
+
       headerComponent: () => (
         <CustomHeaderCell
           label="Id"
           type="number"
           id="id"
+          userColumn={true}
           onColumnChange={handleEditCol}
+          handlePin={handlePin}
         />
       ),
       headerClass: 'column-header',
+      cellRendererFramework: CustomCell,
+      cellRendererParams: (params: any) => ({
+        onEdit: () => {
+          console.log(params.node.rowIndex, params.column.colId);
+          params.api.startEditingCell({
+            rowIndex: params.node.rowIndex,
+            colKey: params.column.colId,
+          });
+        },
+        cellValue: params.value,
+      }),
     },
     {
       id: 'name',
@@ -37,7 +52,9 @@ const Table = () => {
           label="Name"
           type="string"
           id="name"
+          userColumn={true}
           onColumnChange={handleEditCol}
+          handlePin={handlePin}
         />
       ),
       cellRendererFramework: CustomCell,
@@ -45,7 +62,7 @@ const Table = () => {
         onEdit: () => {
           params.api.startEditingCell({
             rowIndex: params.node.rowIndex,
-            colKey: params.column.id,
+            colKey: params.column.colId,
           });
         },
         cellValue: params.value,
@@ -63,7 +80,7 @@ const Table = () => {
         onEdit: () => {
           params.api.startEditingCell({
             rowIndex: params.node.rowIndex,
-            colKey: params.column.id,
+            colKey: params.column.colId,
           });
         },
         cellValue: params.value,
@@ -73,7 +90,9 @@ const Table = () => {
           label="Age"
           type="number"
           id="age"
+          userColumn={true}
           onColumnChange={handleEditCol}
+          handlePin={handlePin}
         />
       ),
     },
@@ -83,12 +102,13 @@ const Table = () => {
       field: 'phone',
       type: 'number',
       headerClass: 'column-header',
+      // pinned: 'left',
       cellRendererFramework: CustomCell,
       cellRendererParams: (params: any) => ({
         onEdit: () => {
           params.api.startEditingCell({
             rowIndex: params.node.rowIndex,
-            colKey: params.column.id,
+            colKey: params.column.colId,
           });
         },
         cellValue: params.value,
@@ -98,7 +118,9 @@ const Table = () => {
           label="Phone"
           type="number"
           id="phone"
+          userColumn={true}
           onColumnChange={handleEditCol}
+          handlePin={handlePin}
         />
       ),
     },
@@ -107,17 +129,15 @@ const Table = () => {
     () => ({
       resizable: true,
       sortable: true,
-      flex: 1,
       filter: true,
       editable: true,
+      flex: 1,
     }),
     []
   );
-  // const onEdit = () => {};
 
-  
-  const handleAddCol = () => {
-    setColumnDefs((data) => {
+  const handleAddWhenCol = () => {
+    setWhenColumnDefs((data) => {
       const updated = [
         ...data,
         {
@@ -130,7 +150,9 @@ const Table = () => {
               label="Default"
               type="any"
               id="default"
+              userColumn={true}
               onColumnChange={handleEditCol}
+              handlePin={handlePin}
             />
           ),
           cellRendererFramework: CustomCell,
@@ -150,24 +172,17 @@ const Table = () => {
     });
   };
 
-
-
   const handleEditCol = (
     colId: string,
     newHeaderName: string,
     newFieldName: string,
-    id: string,
+    id: string
   ) => {
-    console.log(
-      'cold id :' + id,
-      ' New Header Name: ' + newHeaderName,
-      ' New Field :' + newFieldName
-    );
-    const index = columnDefs.findIndex((col) => col.field === id);
+    const index = whenColumnDefs.findIndex((col) => col.field === id);
     console.log('index :' + index);
     if (index !== -1) {
-      setColumnDefs((prevColumnDefs) => {
-        console.log({ prevColumnDefs })
+      setWhenColumnDefs((prevColumnDefs) => {
+        console.log({ prevColumnDefs });
         const updatedColumnDefs: any = [...prevColumnDefs];
         console.log({ updatedColumnDefs });
         updatedColumnDefs[index] = {
@@ -180,7 +195,9 @@ const Table = () => {
               label={newHeaderName}
               type={newFieldName}
               id={id}
+              userColumn={true}
               onColumnChange={handleEditCol}
+              handlePin={handlePin}
             />
           ),
           cellRendererFramework: CustomCell,
@@ -198,11 +215,22 @@ const Table = () => {
         return updatedColumnDefs;
       });
     }
-
   };
-
+  const handlePin = (id: string, pinned: boolean) => {
+    if (!pinned) {
+      const index = whenColumnDefs.findIndex((col) => col.field === id);
+      setWhenColumnDefs((data) => {
+        const updatedData: any = [...data];
+        updatedData[index] = {
+          ...updatedData[index],
+          pinned: 'left',
+        };
+        return updatedData;
+      });
+    }
+  };
   const handleAddRule = () => {
-    setRowData((data) => {
+    setWhenRowData((data) => {
       const updated: rowType[] = [
         ...data,
         { id: '', age: '', name: '', phone: '' },
@@ -211,64 +239,43 @@ const Table = () => {
     });
   };
 
-
-
   const handleCellValueChanged = (params: any) => {
     params.api.stopEditing();
   };
-  // const handleEditCol = (
-  //   colId: string,
-  //   newHeaderName: string,
-  //   newType: string
-  // ) => {
-  //   console.log(
-  //     'cold id :' + colId,
-  //     ' New Header Name: ' + newHeaderName,
-  //     ' New Field :' + newType
-  //   );
-  //   console.log(columnDefs);
-
-  //   const index = columnDefs.findIndex((col) => col.field === colId);
-  //   console.log('index :' + index);
-  //   if (index !== -1) {
-  //     setColumnDefs((prevColumnDefs) => {
-  //       const updatedColumnDefs: any = [...prevColumnDefs];
-
-  //       updatedColumnDefs[index] = {
-  //         ...updatedColumnDefs[index],
-  //         headerName: newHeaderName,
-  //         field: colId,
-  //         type: newType,
-  //         id: colId,
-  //         headerComponent: () => (
-  //           <CustomHeaderCell
-  //             label={newHeaderName}
-  //             type={newType}
-  //             onColumnChange={handleEditCol}
-  //           />
-  //         ),
-  //       };
-  //       return updatedColumnDefs;
-  //     });
-  //   }
-  // };
 
   return (
-    <div style={containerStyle}>
-      <div style={{ height: '100%', boxSizing: 'border-box' }}>
-        <div className="grid-container">
+    <div className="table">
+      <div className="scroll-wrapper">
+        <div className="grid-block">
+          <div className="when-btn-sec">
+            <span>When</span>
+            <AiFillPlusCircle onClick={handleAddWhenCol} className="plus-btn" />
+          </div>
           <AgGridReact
-            rowData={rowData}
-            columnDefs={columnDefs}
+            rowData={whenRowData}
+            columnDefs={whenColumnDefs}
             defaultColDef={defaultColDef}
             className="ag-theme-alpine"
             onCellValueChanged={handleCellValueChanged}
           />
-          
         </div>
-        <button onClick={handleAddRule}>Add Rule</button>
-        <button onClick={handleAddCol}>Add Col</button>
+        <div className="grid-block">
+          <div className="when-btn-sec">
+            <span>Then</span>
+            <AiFillPlusCircle className="plus-btn" />
+          </div>
+          <AgGridReact
+            rowData={thenRowData}
+            columnDefs={thenColumnDefs}
+            defaultColDef={defaultColDef}
+            className="ag-theme-alpine"
+            // onCellValueChanged={handleCellValueChanged}
+          />
+        </div>
       </div>
+      <button className="add-rule-btn" onClick={handleAddRule}>
+        Add Rule
+      </button>
     </div>
   );
 };
