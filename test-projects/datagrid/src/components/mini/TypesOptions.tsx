@@ -22,9 +22,11 @@ const TypesOptions: React.FC<defaultProps> = ({
   const [selectedOption, setSelectedOption] = useState(type);
   const [columnName, setColumnName] = useState(column);
   const handleSelectedOptions = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    console.log(e.target.value)
     setSelectedOption(e.target.value);
   };
   const handleColumnName = (e: any) => {
+    console.log(e.target.value)
     setColumnName(e.target.value);
   };
   const handleOnSubmit = (e: any) => {
