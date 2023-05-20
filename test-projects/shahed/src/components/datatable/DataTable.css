@@ -10,6 +10,7 @@
     align-items: center;
     background-color: #f2f2f2;
     padding: 8px;
+    
 }
 
 .table-body {
@@ -19,7 +20,7 @@
 .table-row {
     display: flex;
     align-items: center;
-    border-bottom: 1px solid #ccc;
+    /* border-bottom: .2px solid gray; */
 }
 
 .table-cell {
@@ -28,8 +29,12 @@
 }
 
 .table-footer {
-    text-align: center;
-    padding: 8px;
+    text-align: left;
+}
+
+.header-cell{
+    padding-left: 18px;
+    /* border-right: 2px solid gray; */
 }
 
 .header-cell input,
