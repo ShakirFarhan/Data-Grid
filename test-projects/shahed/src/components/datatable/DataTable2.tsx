@@ -25,7 +25,6 @@ const DataTable2: React.FC = () => {
         { id: 2, name: 'Column 2' }
     ]);
 
-
     // default data set
     const [data, setData] = useState<DataRow[]>([
         ['1', 'Row 1 Data 1', 'Row 1 Data 2'],
@@ -33,14 +32,28 @@ const DataTable2: React.FC = () => {
     ]);
 
 
+    const types = [
+        "string",
+        "boolean",
+        "number",
+        "date",
+        "time",
+        "dateTime",
+        "dayTimeDuration",
+        "yearMonthDuration",
+        "Any"
+    ]
 
+
+    console.log({headers})
+    console.log({data})
     // setting which column going to be editing
     const [editableColumnIndex, setEditableColumnIndex] = useState<number | null>(null);
 
 
     // adding new cell
     const addRow = () => {
-        setData((prevData) => [...prevData, Array(headers.length).fill('')]);
+        setData((prevData) => [...prevData, [(prevData.length + 1).toString(),'','']]);
     };
 
 
@@ -59,17 +72,6 @@ const DataTable2: React.FC = () => {
     };
 
 
-
-// previous version header update. now using new version
-    const updateHeader = (index: number, value: string) => {
-        setHeaders((prevHeaders) => {
-            const newHeaders = [...prevHeaders];
-            newHeaders[index].name = value;
-            return newHeaders;
-        });
-    };
-
-
     // for updating cell data
     const updateCell = (rowIndex: number, colIndex: number, value: string) => {
         setData((prevData) => {
@@ -81,42 +83,44 @@ const DataTable2: React.FC = () => {
 
     // for deleting column with row data
     const handleDelete = (header: Header) => {
-        setHeaders((prevHeaders) => prevHeaders.filter((value) => value.id !== header.id));
-
-        if (headers.length === 1) {
-            // If all columns are deleted, clear the data
-            setData([]);
-        } else {
-            setData((prevData) =>
-                prevData.map((row) => row.filter((_, colIndex) => colIndex !== header.id - 1))
-            );
+        if (header.id === 0) {
+            // Prevent deleting the ID column
+            return;
         }
+
+        let columnIndex: any;
+
+        setHeaders((prevHeaders) => prevHeaders.filter((value, index) => {
+            
+            if(value.id === header.id){
+                console.log(index)
+                columnIndex = index;
+
+            }
+            return value.id !== header.id
+        }));
+
+        setData((prevData) =>
+        {
+
+            const newData = prevData.map((row) => row.filter((_, colIndex) => {
+                return colIndex !== columnIndex
+            }))
+
+            return newData;
+        }
+        );
     };
-
-
-    // for column click to edit. not using now.
-    const handleColumnClick = (index: number) => {
-        setEditableColumnIndex(index);
-    };
-
-
-    // for update column editing or not
-    const handleColumnBlur = () => {
-        setEditableColumnIndex(null);
-    };
-
 
     // handle header with double click
     const handleHeaderDoubleClick = (index: number) => {
         setEditableColumnIndex(index);
     };
 
-
     // for handling popover show or hide. not using just declared here
     const handlePopoverClose = (): void => {
         setEditableColumnIndex(null);
     };
-
 
 
     // for changing header
@@ -133,6 +137,7 @@ const DataTable2: React.FC = () => {
     const handleInputSubmit = () => {
         setEditableColumnIndex(null);
     };
+
 
     return (
         <div className="data-table">
@@ -152,10 +157,10 @@ const DataTable2: React.FC = () => {
                                 trigger="click"
                                 placement="bottom"
                                 show={editableColumnIndex === index}
-                                // onHide={handlePopoverClose}
-                                rootClose
+                                onToggle={handlePopoverClose}
+                                
                                 overlay={
-                                    <Popover id={`popover-${index}`}>
+                                    <Popover id={`popover-${index}`} >
                                         <Popover.Body>
                                             <input
                                                 type="text"
@@ -164,6 +169,14 @@ const DataTable2: React.FC = () => {
                                                 onBlur={handleInputSubmit}
                                                 autoFocus
                                             />
+
+                                            <div>Expression</div>
+                                            <select name="" id="">
+                                                
+                                                {types && types.map((item: any, index: any) => {
+                                                    return <option value="">{item}</option>
+                                                })}
+                                            </select>
                                         </Popover.Body>
                                     </Popover>
                                 }
@@ -202,21 +215,22 @@ const DataTable2: React.FC = () => {
                         {row.map((cell, colIndex) => (
                             <div key={colIndex} className="table-cell border">
                                 {colIndex !== 0 ? (
-                                    // this portion is enable based on the col index. we won't let the id column editable
+                                    // this portion is enabled for non-ID columns
                                     <input
                                         type="text"
                                         value={cell}
                                         onChange={(e) => updateCell(rowIndex, colIndex, e.target.value)}
                                     />
                                 ) : (
-                                    // this is for id column
-                                    <input type="text" value={cell} disabled />
+                                    // this is for the ID column
+                                    <input type="text" value={cell} readOnly />
                                 )}
                             </div>
                         ))}
                     </div>
                 ))}
             </div>
+
             {/* another add icon to add row */}
             <div className="table-footer">
                 <div className="header-cell">
