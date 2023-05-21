@@ -21,8 +21,14 @@
   --ag-header-cell-moving-background-color: #868686;
   z-index: 1;
   --ag-row-hover-color: none;
+  overflow: visible;
 }
-
+.ag-center-cols-clipper,
+.ag-center-cols-viewport {
+  overflow: visible;
+  z-index: 0;
+  position: relative;
+}
 .ag-theme-alpine::-webkit-scrollbar {
   display: none;
 }

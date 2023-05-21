@@ -3,6 +3,7 @@ export interface columnInterface {
   headerName: string;
   field: string;
   type: string;
+  disableColumnMenu?: boolean;
   headerComponent: () => JSX.Element;
   headerClass: string;
   cellRendererFramework?: any;

@@ -58,3 +58,13 @@ export const DefaultWhenRowData: rowType[] = [
     phone: 687647,
   },
 ];
+
+
+// export const DefaultRowData: rowType[] = [
+//   {
+//     id: "",
+//     name: "",
+//     age: "",
+//     phone: "",
+//   },
+// ];
