@@ -5,8 +5,8 @@ import DataTable from './components/Datatable';
 function App() {
   return (
     <>
-      {/* <DataTable /> */}
-      <Table />
+      <DataTable />
+      {/* <Table /> */}
     </>
   );
 }

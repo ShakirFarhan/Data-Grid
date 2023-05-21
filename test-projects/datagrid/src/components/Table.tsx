@@ -14,7 +14,7 @@ const Table = () => {
   const [thenRowData, setThenRowData] = useState<any[]>([]);
   const [thenColumnDefs, setThenColumnDefs] = useState<any[]>([
     {
-      id: 'id',
+      id: '1',
       headerName: 'Id',
       field: 'id',
       type: 'number',
