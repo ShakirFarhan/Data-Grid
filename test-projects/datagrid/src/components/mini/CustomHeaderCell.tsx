@@ -6,6 +6,8 @@ import { RxHamburgerMenu } from 'react-icons/rx';
 import { CiMenuKebab } from 'react-icons/ci';
 import { columnHeaderProps } from '../../constants/interfaces';
 import { MdKeyboardArrowDown } from 'react-icons/md';
+import ColOptions from './ColOptions';
+
 const CustomHeaderCell: React.FC<columnHeaderProps> = ({
   label,
   children,
@@ -14,9 +16,11 @@ const CustomHeaderCell: React.FC<columnHeaderProps> = ({
   userColumn,
   onColumnChange,
   handlePin,
+  setWhenColumnDefs,
 }) => {
   const [modalActive, setModalActive] = useState(false);
   const [pinned, setPinned] = useState(false);
+  const [optionsVisible, setOptionsVisible] = useState(false);
   const handleModal = () => {
     setModalActive((data) => {
       return !data;
@@ -28,14 +32,22 @@ const CustomHeaderCell: React.FC<columnHeaderProps> = ({
       handlePin(id, pinned);
     } else {
       setPinned(false);
-      // handlePin(id, pinned);
     }
   };
   if (userColumn) {
     return (
       <>
         <div onClick={handleModal} className="custom-column-header">
-          <span style={{ fontWeight: '400', fontSize: '15px' }}>{label}</span>
+          {!label || label === '' ? (
+            <span
+              style={{ fontWeight: '400', fontSize: '15px', color: '#9a9b9e' }}
+            >
+              Input
+            </span>
+          ) : (
+            <span style={{ fontWeight: '400', fontSize: '15px' }}>{label}</span>
+          )}
+
           <span
             style={{ marginRight: '4px', fontSize: '12px', color: '#829df7' }}
           >
@@ -61,7 +73,13 @@ const CustomHeaderCell: React.FC<columnHeaderProps> = ({
             onClick={handlePinning}
             className={pinned ? 'pin-btn' : 'pinned'}
           />
-          <CiMenuKebab className="menu-btn" />
+          <CiMenuKebab
+            onClick={() => {
+              setOptionsVisible(true);
+            }}
+            className="menu-btn"
+          />
+          <ColOptions />
         </div>
       </>
     );

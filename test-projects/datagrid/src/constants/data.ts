@@ -3,39 +3,39 @@ import { rowType } from './interfaces';
 export const types = [
   {
     id: 1,
-    type: 'String',
+    type: 'None',
   },
   {
     id: 2,
-    type: 'Booleon',
+    type: 'String',
   },
   {
     id: 3,
-    type: 'Number',
+    type: 'Booleon',
   },
   {
     id: 4,
-    type: 'Data',
+    type: 'Number',
   },
   {
     id: 5,
-    type: 'Time',
+    type: 'Data',
   },
   {
     id: 6,
-    type: 'DateTime',
+    type: 'Time',
   },
   {
     id: 7,
-    type: 'DayTimeDuration',
+    type: 'DateTime',
   },
   {
     id: 8,
-    type: 'YearMonthDuration',
+    type: 'DayTimeDuration',
   },
   {
     id: 9,
-    type: 'Any',
+    type: 'YearMonthDuration',
   },
 ];
 export const DefaultWhenRowData: rowType[] = [
@@ -58,7 +58,6 @@ export const DefaultWhenRowData: rowType[] = [
     phone: 687647,
   },
 ];
-
 
 // export const DefaultRowData: rowType[] = [
 //   {

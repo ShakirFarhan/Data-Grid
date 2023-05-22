@@ -1,11 +1,14 @@
+import React, { Dispatch, ReactNode, SetStateAction } from 'react';
+
 export interface columnInterface {
   id: string;
   headerName: string;
   field: string;
   type: string;
   disableColumnMenu?: boolean;
-  headerComponent: () => JSX.Element;
+  headerComponent: (() => JSX.Element) | any;
   headerClass: string;
+  headerProps?: any;
   cellRendererFramework?: any;
   cellRendererParams?: any;
   pinned?: 'left' | 'right';
@@ -26,14 +29,16 @@ export interface columnHeaderProps {
   children?: any;
   type: string;
   id: string;
+  userColumn: boolean;
   onColumnChange: (
     colId: string,
     newHeaderName: string,
-    newFieldName: string,
-    id: string
+    newFieldName: string
+    // id: string
   ) => void;
   handlePin: (id: string, pinned: boolean) => void;
-  userColumn?: boolean;
+  setWhenColumnDefs?: Dispatch<SetStateAction<columnInterface[]>>;
+  newCol?: boolean;
 }
 export interface defaultProps {
   id: string;
@@ -42,7 +47,14 @@ export interface defaultProps {
   onColumnChange: (
     colId: string,
     newHeaderName: string,
-    newFieldName: string,
-    id: string
+    newFieldName: string
+    // id: string
   ) => void;
 }
+// export interface zustandStoreInterface {
+//   whenRowData: rowType[];
+//   whenColData: columnInterface[];
+//   thenRowData: rowType[];
+//   thenColData: columnInterface[];
+//   addRow: (whenColData: any, thenColData: any) => void;
+// }

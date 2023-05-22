@@ -41,7 +41,7 @@
   width: 100%;
   display: flex;
   overflow-x: scroll;
-  overflow-y: hidden;
+  /* overflow-y: hidden; */
 }
 .scroll-wrapper::-webkit-scrollbar {
   display: none;
