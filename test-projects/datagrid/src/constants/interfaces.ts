@@ -36,9 +36,10 @@ export interface columnHeaderProps {
     newFieldName: string
     // id: string
   ) => void;
-  handlePin: (id: string, pinned: boolean) => void;
+  handlePin: (id: string, pinned: boolean, setPinned: any) => void;
   setWhenColumnDefs?: Dispatch<SetStateAction<columnInterface[]>>;
   newCol?: boolean;
+  handleOptions: (id: string, task: string) => void;
 }
 export interface defaultProps {
   id: string;

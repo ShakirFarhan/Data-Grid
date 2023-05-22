@@ -1,0 +1,89 @@
+.type-model {
+  position: fixed;
+  top: 80px;
+  /* left: 10px;
+  bottom: 0; */
+  width: 250px;
+  height: 200px;
+  z-index: 9999;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  display: flex;
+  flex-direction: column;
+}
+.hidden {
+  display: none;
+}
+
+.modal-hidden {
+  display: none;
+  background-color: transparent;
+  z-index: -1;
+}
+
+.custom-column-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  /* row-gap: 14px; */
+  cursor: pointer;
+  /* position: relative; */
+}
+
+.column-props {
+  position: absolute;
+  top: 6px;
+  right: 5px;
+  display: flex;
+  column-gap: 7.5px;
+  align-items: center;
+}
+
+.column-props .move-btn {
+  height: 17px;
+  width: 14px;
+}
+
+.column-props .pin-btn {
+  height: 13.5px;
+  width: 15px;
+  fill: grey;
+  fill: #2f54eb;
+}
+
+.pinned {
+  height: 13.5px;
+  width: 15px;
+
+  fill: grey;
+}
+
+.column-props .menu-btn {
+  width: 15px;
+  height: 13.5px;
+}
+
+.column-props .menu-attach {
+  width: 25px;
+  height: 19.5px;
+  margin-right: 0px;
+  margin-bottom: -34px;
+}
+.any-btn {
+  border: none;
+  outline: 0;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 34%;
+  left: 30%;
+}
+.any-btn span {
+  font-size: 15px;
+}
+.bottom-arrow-icon {
+  width: 18px;
+  height: 18px;
+}

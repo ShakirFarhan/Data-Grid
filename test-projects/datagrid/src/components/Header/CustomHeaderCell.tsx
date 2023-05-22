@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import './common.css';
-import TypesOptions from './TypesOptions';
+import '../css/customHeader.css';
+
 import { BsPinAngleFill } from 'react-icons/bs';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { CiMenuKebab } from 'react-icons/ci';
 import { columnHeaderProps } from '../../constants/interfaces';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import ColOptions from './ColOptions';
-
+import TypesOptions from './TypesOptions';
 const CustomHeaderCell: React.FC<columnHeaderProps> = ({
   label,
   children,
@@ -16,23 +16,22 @@ const CustomHeaderCell: React.FC<columnHeaderProps> = ({
   userColumn,
   onColumnChange,
   handlePin,
-  setWhenColumnDefs,
+  handleOptions,
 }) => {
   const [modalActive, setModalActive] = useState(false);
-  const [pinned, setPinned] = useState(false);
+  const [pinned, setPinned] = useState(true);
   const [optionsVisible, setOptionsVisible] = useState(false);
+
   const handleModal = () => {
     setModalActive((data) => {
       return !data;
     });
   };
   const handlePinning = () => {
-    if (!pinned) {
-      setPinned(true);
-      handlePin(id, pinned);
-    } else {
-      setPinned(false);
-    }
+    setPinned((data) => {
+      return !data;
+    });
+    handlePin(id, pinned, setPinned);
   };
   if (userColumn) {
     return (
@@ -71,15 +70,21 @@ const CustomHeaderCell: React.FC<columnHeaderProps> = ({
           <RxHamburgerMenu className="move-btn" />
           <BsPinAngleFill
             onClick={handlePinning}
-            className={pinned ? 'pin-btn' : 'pinned'}
+            className={pinned ? 'pinned' : 'pin-btn'}
           />
           <CiMenuKebab
             onClick={() => {
-              setOptionsVisible(true);
+              setOptionsVisible(!optionsVisible);
             }}
             className="menu-btn"
           />
-          <ColOptions />
+          {optionsVisible && (
+            <ColOptions
+              setOptionsVisible={setOptionsVisible}
+              handleOptions={handleOptions}
+              id={id}
+            />
+          )}
         </div>
       </>
     );

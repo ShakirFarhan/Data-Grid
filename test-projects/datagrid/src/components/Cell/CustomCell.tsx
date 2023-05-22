@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './common.css';
+import '../css/customCell.css';
 import { MdOutlineModeEditOutline } from 'react-icons/md';
 import { useStore } from '../../store';
 interface IProps {

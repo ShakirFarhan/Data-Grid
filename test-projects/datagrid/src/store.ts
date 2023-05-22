@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 // import { zustandStoreInterface } from './constants/interfaces';
-import CustomCell from './components/mini/CustomCell';
-import CustomHeaderCell from './components/mini/CustomHeaderCell';
+import CustomCell from './components/Cell/CustomCell';
+import CustomHeaderCell from './components/Header/CustomHeaderCell';
 import { columnInterface, rowType } from './constants/interfaces';
 export interface zustandStoreInterface {
   whenRowData: rowType[];

@@ -59,11 +59,25 @@ export const DefaultWhenRowData: rowType[] = [
   },
 ];
 
-// export const DefaultRowData: rowType[] = [
-//   {
-//     id: "",
-//     name: "",
-//     age: "",
-//     phone: "",
-//   },
-// ];
+export const optionsData = [
+  {
+    key: 'copy',
+    function: 'Copy Output Column',
+  },
+  {
+    key: 'duplicate',
+    function: 'Duplicate Output Column',
+  },
+  {
+    key: 'a-z',
+    function: 'Sort by A-Z',
+  },
+  {
+    key: 'z-a',
+    function: 'Sort by Z-A',
+  },
+  {
+    key: 'remove',
+    function: 'Remove Output Column',
+  },
+];

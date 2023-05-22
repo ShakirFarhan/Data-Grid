@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { types } from '../../constants/data';
 import { defaultProps } from '../../constants/interfaces';
-
+import '../css/typesOption.css';
 const TypesOptions: React.FC<defaultProps> = ({
   id,
   type,
@@ -18,7 +18,6 @@ const TypesOptions: React.FC<defaultProps> = ({
   };
   const handleOnSubmit = (e: any) => {
     e.preventDefault();
-    // onColumnChange(id, columnName, selectedOption, id);
     onColumnChange(id, columnName, selectedOption);
   };
 
